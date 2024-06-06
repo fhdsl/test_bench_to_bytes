@@ -2,6 +2,7 @@
 
 The third "why computational skill are useful" theme that we'll explore is reproducibility.
 
+TEST
 
 ```{r, include = FALSE}
 ottrpal::set_knitr_image_path()
