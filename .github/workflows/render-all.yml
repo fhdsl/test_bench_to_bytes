@@ -84,8 +84,22 @@ jobs:
           git fetch origin
           git add --force docs/*
           git commit -m 'Render bookdown' || echo "No changes to commit"
+
+          # Ensure there are no unstaged changes
+          if ! git diff --quiet; then
+            echo "Stashing changes before pulling"
+            git stash --include-untracked
+          fi
+
           git config --global pull.rebase true
           git pull --allow-unrelated-histories --strategy-option=ours
+
+           # Apply stashed changes if any
+          if git stash list | grep -q 'stash@{0}'; then
+            echo "Applying stashed changes"
+            git stash pop
+          fi
+          
           git push -u origin main  || echo "No changes to push"
 
   render-tocless:
